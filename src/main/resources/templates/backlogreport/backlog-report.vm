@@ -1,0 +1,88 @@
+#if ($searchRequest)
+    #set ($urlPrefix = "${req.contextPath}/secure/IssueNavigator.jspa?reset=true")
+#end
+<table width="100%" class="report" id="single_groupby_report_table">
+<tr><th class="reportHeading" colspan="8">
+    <h3 class="formtitle">$i18n.getText('report.singlelevelgroupby.mapper.filterid.name'): $textutils.htmlEncode($searchRequest.name)</h3>
+</th></tr>
+    #foreach ($option in $statsGroup.entrySet())
+    #set ($issues = $option.value)
+
+        <tr>
+            <th colspan="8" class="subHeading">
+                <h3 class="bluetext"> 
+                #statHeading ($i18n.getText("report.backlogreport.version.label") "$option.key $outlookDate.format($option.key.releaseDate)" $customFieldManager "${urlPrefix}$!searchService.getQueryString($user, $statsGroup.getMapper().getSearchUrlSuffix($option.key, $searchRequest).getQuery())")
+                </h3>
+
+                #set ($graphModel = $statsGroup.getResolvedIssues($option.key))
+
+                #percentageGraphDiv ($graphModel)
+                <span class="graphLabel">$i18n.getText("common.words.progress"):</span>
+                <br />
+                #if ($issues.size() > 0)
+                    <span class="graphDescription">$i18n.getText("roadmap.issuesresolved", "$statsGroup.getResolvedIssueCount($issues)", "$issues.size()")</span>
+                #end
+            </th>
+        </tr>
+
+        #if ($issues.size() > 0)
+            #foreach ($issue in $issues)
+                #parse("templates/backlogreport/backlog-issue.vm")
+            #end
+        #else
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="8">
+                    <span class="subText">$action.getText("common.concepts.noissues").</span>
+                </td>
+            </tr>
+        #end
+    #end
+
+    ## Render the Irrelevant issues if there are any
+    #if($statsGroup.getIrrelevantIssues().size() > 0)
+        #set ($issues = $statsGroup.getIrrelevantIssues())
+        <tr>
+            <th colspan="8" class="subHeading">
+                <h3 class="bluetext">
+                    <span title="$i18n.getText('common.concepts.irrelevant.desc')">$i18n.getText('common.concepts.irrelevant')</span>
+                </h3>
+
+                #set ($graphModel = $statsGroup.getIrrelevantResolvedIssues())
+
+                #percentageGraphDiv ($graphModel)
+                <span class="graphLabel">$i18n.getText("common.words.progress"):</span>
+                <br />
+                #if ($issues.size() > 0)
+                    <span class="graphDescription">$i18n.getText("roadmap.issuesresolved", "$statsGroup.getResolvedIssueCount($issues)", "$issues.size()")</span>
+                #end
+            </th>
+        </tr>
+
+        #if ($issues.size() > 0)
+            #foreach ($issue in $issues)
+                <tr>
+                    <td width="5%">&nbsp;</td>
+                    #issueLineItem ($issue)
+                    <td nowrap>
+                        #if($issue.getAssignee())
+                            $issue.getAssignee().getFullName()
+                        #else
+                            $i18n.getText('common.concepts.unassigned')
+                        #end</td>
+                    <td nowrap>$outlookDate.format($issue.getUpdated())</td>
+                </tr>
+                            #end
+        #else
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="6">
+                    <span class="subText">$action.getText("common.concepts.noissues").</span>
+                </td>
+            </tr>
+        #end
+
+    #end
+
+</table>
+                

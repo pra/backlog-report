@@ -1,0 +1,39 @@
+<tr valign="top">
+    <td></td>
+    ## ID
+    <td><a href="${req.contextPath}/browse/$issue.getKey()">$issue.getKey()</a></td>
+    ## Theme
+    <td>$textUtils.join(",", $reportUtil.filterComponents($issue.getComponents()))</td>
+    ## Superstory - BAAD code
+    #if ($issue.getIssueTypeObject().getNameTranslation().equals("Super Story"))
+        <td>$textutils.htmlEncode($issue.getSummary())</td>
+        ## Story
+        <td></td>
+    #elseif ($issue.isSubTask())
+        <td>$textutils.htmlEncode($issue.getParentObject().getSummary())</td>
+        ## Story
+        <td>$textutils.htmlEncode($issue.getSummary())</td>
+    #else
+       <td></td>
+       ## Story
+       <td>$textutils.htmlEncode($issue.getSummary())</td>
+    #end
+
+    ## Status
+    <td>$textutils.htmlEncode($issue.getStatusObject().getNameTranslation())</td>
+    ## Resolution
+    <td>$textutils.htmlEncode($issue.getResolutionObject().getNameTranslation())</td>
+    ## Date if resolved
+    #if ($issue.getPriorityObject().getResoltionDate())
+        <td>$outlookDate.format($issue.getPriorityObject().getResoltionDate())</td>
+    #else
+       <td></td>
+    #end
+    
+    
+    ##<td>$textutils.htmlEncode($issue.getPriorityObject().getNameTranslation())</td>
+    ##<td>$textutils.htmlEncode($issue.getIssueTypeObject().getNameTranslation())</td>
+    ##<td><a href="${req.contextPath}/browse/$issue.getKey()">$issue.getKey()</a></td>
+    ##<td>$textutils.htmlEncode($issue.getSummary())</td>
+    ##<td>$textutils.htmlEncode($issue.getStatusObject().getNameTranslation())</td>
+</tr>

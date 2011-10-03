@@ -1,0 +1,49 @@
+<tr>
+        ## Version
+    	<td></td>
+    	## ID
+    	<td width="5%" nowrap><a href="$req.contextPath/browse/$issue.getKey()">$issue.getKey()</a></td>
+        ## Theme
+        <td>$textUtils.join(",", $reportUtil.filterComponents($issue.getComponents()))</td>
+        
+        ## Superstory - BAAD code
+        #if ($issue.getIssueTypeObject().getNameTranslation().equals("Super Story"))
+            <td>$textutils.htmlEncode($issue.getSummary())</td>
+            ## Story
+            <td></td>
+        #elseif ($issue.isSubTask())
+            <td>$textutils.htmlEncode($issue.getParentObject().getSummary())</td>
+            ## Story
+            <td>
+            #set ($parentIssue = $issue.getParentObject())
+            #if ($permissionCheck && $permissionCheck.isIssueVisible($parentIssue) == true)
+                <a href="$req.contextPath/browse/$parentIssue.getKey()" style="text-decoration: none;" title="$textutils.htmlEncode($parentIssue.getSummary())">$parentIssue.getKey()</a><br/>
+            #else
+                <span class="smallgrey">$parentIssue.getKey()</span><br/>
+            #end
+            <img src="$req.contextPath/images/icons/link_out_bot.gif" width="16" height="16" border="0" align="absmiddle" alt="" />
+            <a href="$req.contextPath/browse/$issue.getKey()">$textutils.htmlEncode($issue.getSummary())</a></td>
+        #else
+            <td></td>
+            ## Story
+            <td><a href="$req.contextPath/browse/$issue.getKey()">$textutils.htmlEncode($issue.getSummary())</a></td>
+        #end
+        
+        ## Status
+        <td>#displayConstantIcon($issue.getStatusObject())</td>
+        ## Resolution
+        <td width="5%" nowrap>
+    		#if ($fieldVisibility && $fieldVisibility.isFieldHidden("resolution", $issue) == false)
+        		#if ($issue.getResolutionObject())
+            		$textutils.htmlEncode($!issue.getResolutionObject().getNameTranslation().toUpperCase(), false)
+        		#else
+            		<em>$i18n.getText("common.status.unresolved")</em>
+        		#end
+    		#end
+		</td>
+        ## Date if resolved
+        #if ($issue.getPriorityObject().getResoltionDate())
+        	<td>$outlookDate.format($issue.getPriorityObject().getResoltionDate())</td>
+        #else
+        #end
+ </tr>

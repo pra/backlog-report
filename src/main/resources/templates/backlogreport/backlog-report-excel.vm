@@ -1,0 +1,50 @@
+#set ($colspanCount = 8)
+<table id="task_report_table" border="1">
+<tr>
+    <td bgcolor="${topBgColor}" colspan="${colspanCount}" height=30>
+    $jiraTitle
+    </td>
+</tr>
+
+<tr>
+    <th bgcolor="#dddddd"><b>$descriptor.getText("report.backlogreport.version.label")</b></th>
+    <th bgcolor="#dddddd"><b>$descriptor.getText("report.backlogreport.id.label")</b></th>
+    <th bgcolor="#dddddd"><b>$descriptor.getText("report.backlogreport.theme.label")</b></th>
+    <th bgcolor="#dddddd"><b>$descriptor.getText("report.backlogreport.superstory.label")</b></th>
+    <th bgcolor="#dddddd"><b>$descriptor.getText("report.backlogreport.story.label")</b></th>
+    <th bgcolor="#dddddd"><b>$descriptor.getText("issue.field.status")</b></th>
+    <th bgcolor="#dddddd"><b>$descriptor.getText("issue.field.resolution")</b></th>
+    <th bgcolor="#dddddd"><b>$descriptor.getText("report.backlogreport.date.label")</b></th>
+<tr>
+
+#foreach ($option in $statsGroup.entrySet())
+#set ($issues = $option.value)
+<tr valign="top">
+ <th>$option.key</th>
+ <td></td>
+ <td></td>
+ <td></td>
+ <td></td>
+ <td></td>
+ <td></td>
+ <th>$outlookDate.format($option.key.releaseDate)</th>
+</tr>
+
+
+  #foreach ($issue in $issues)
+      #parse("templates/backlogreport/backlog-issue-excel.vm")
+  #end
+#end
+<tr>
+    <td bgcolor="#ffffff" colspan="${colspanCount}">&nbsp;</td>
+</tr>
+<tr>
+    <td bgcolor="#dddddd" colspan="${colspanCount}"><font size=1>
+        #if ($remoteUser)
+            $descriptor.getText("report.timetracking.generated.user.info", [$createDate, $textutils.htmlEncode($remoteUser.getFullName()), $buildInfo])
+        #else
+            $descriptor.getText("report.timetracking.generated.anon.info", [$createDate, $buildInfo])
+        #end
+    </font></td>
+</tr>
+</table>

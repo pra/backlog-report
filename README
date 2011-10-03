@@ -1,0 +1,33 @@
+Backlog Report
+This a Jira report plugin which gives a "backlog" report, both in html and excel.
+
+It is very specific for our setup where we:
+* Uses one project for several products
+* Products are components namespaced with "p:"
+* Have themes expressed as component namespaced with "p:"
+* Have Super Stories (the currently have to be named Super Story" as type
+* Have stories that are either sub-tasks to a super story or is a stand alone issue of any type
+* Have versions that are time boxed releases
+
+If that feels OK. Build and install.
+
+Here are the SDK commands you'll use immediately:
+
+* atlas-run   -- installs this plugin into JIRA and starts it on http://localhost:2990/jira
+* atlas-debug -- same as atlas-run, but allows a debugger to attach at port 5005
+* atlas-cli   -- after atlas-run or atlas-debug, opens a Maven command line window:
+                 - 'pi' reinstalls the plugin into the running JIRA instance
+* atlas-help  -- prints description for all commands in the SDK
+
+Full documentation is always available at:
+
+  http://confluence.atlassian.com/display/DEVNET/Developing+your+Plugin+using+the+Atlassian+Plugin+SDK
+
+To test the plugin, a test installation can be done from command line. JRebel is supported out of the box.
+
+Run:
+
+  atlas-run --jvmargs "-javaagent:$JREBEL_HOME/jrebel.jar -XX:MaxPermSize=256M -Dmyproject.root=$PWD" 
+
+Test data is available in src/test/resources/test-setup.zip. 
+Copy it to target/jira/home/import/ and import it into the running Jira.

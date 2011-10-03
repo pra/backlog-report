@@ -1,0 +1,34 @@
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+    </plugin-info>
+        <!-- A report that generates a backlog report grouped on unreleased versions -->
+    <report key="backlogreport" name="Backlog Report" class="com.polopoly.jira.BacklogReport">
+        <description key="report.backlogreport.description">i18n description</description>
+        <resource type="velocity" name="view" location="templates/backlogreport/backlog-report.vm" />
+        <resource type="velocity" name="excel" location="templates/backlogreport/backlog-report-excel.vm" />
+        <resource type="i18n" name="i18n" location="com.polopoly.jira.backlog_report" />
+        <label key="report.backlogreport.label.extended" />
+        
+        <properties>
+        <!--  
+            <property>
+                <key>filterid</key>
+                <name>report.taskreport.filterId</name>
+                <description>report.taskreport.filterId.description</description>
+                <type>select</type>
+                <values class="com.atlassian.jira.portal.SearchRequestValuesGenerator" />
+            </property>
+            <property>
+                <key>mapper</key>
+                <name>report.taskreport.mapper</name>
+                <description>report.taskreport.mapper.description</description>
+                <type>select</type>
+                <values class="com.atlassian.jira.issue.statistics.FilterStatisticsValuesGenerator" />
+            </property>
+            -->
+        </properties>
+    </report>
+</atlassian-plugin>
