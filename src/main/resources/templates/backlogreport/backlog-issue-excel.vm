@@ -3,7 +3,7 @@
     ## ID
     <td><a href="${req.contextPath}/browse/$issue.getKey()">$issue.getKey()</a></td>
     ## Theme
-    <td>$textUtils.join(",", $reportUtil.filterComponents($issue.getComponents()))</td>
+    <td>$textUtils.join(",", $reportUtil.filterGenericValueComponents($issue.getComponents()))</td>
     ## Superstory - BAAD code
     #if ($issue.getIssueTypeObject().getNameTranslation().equals("Super Story"))
         <td>$textutils.htmlEncode($issue.getSummary())</td>
