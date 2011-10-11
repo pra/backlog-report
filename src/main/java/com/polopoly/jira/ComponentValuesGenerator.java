@@ -25,10 +25,10 @@ public abstract class ComponentValuesGenerator implements ValuesGenerator {
     @Override
     public Map getValues(Map params)
     {
-        System.err.println("DEBUG params " + params);
+//        System.err.println("DEBUG params " + params);
         
         GenericValue projectGV = (GenericValue) params.get("project");
-        ProjectComponentManager componentManager =  ComponentAccessor.getProjectComponentManager();
+        ProjectComponentManager componentManager =  (ProjectComponentManager)ComponentAccessor.getComponentOfType(ProjectComponentManager.class);
         Collection<ProjectComponent> components =  componentManager.findAllForProject(projectGV.getLong("id"));
         Map<Long, String> products = new HashMap<Long, String>();
         products.put(ALL_ID, ALL);
