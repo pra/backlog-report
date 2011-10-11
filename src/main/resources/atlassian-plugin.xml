@@ -13,22 +13,13 @@
         <label key="report.backlogreport.label.extended" />
         
         <properties>
-        <!--  
-            <property>
-                <key>filterid</key>
-                <name>report.taskreport.filterId</name>
-                <description>report.taskreport.filterId.description</description>
+             <property>
+                <key>product</key>
+                <name>report.backlogreport.product</name>
+                <description>report.backlogreport.product.description</description>
                 <type>select</type>
-                <values class="com.atlassian.jira.portal.SearchRequestValuesGenerator" />
+                <values class="com.polopoly.jira.PPrefixComponentValuesGenerator" />
             </property>
-            <property>
-                <key>mapper</key>
-                <name>report.taskreport.mapper</name>
-                <description>report.taskreport.mapper.description</description>
-                <type>select</type>
-                <values class="com.atlassian.jira.issue.statistics.FilterStatisticsValuesGenerator" />
-            </property>
-            -->
         </properties>
     </report>
 </atlassian-plugin>

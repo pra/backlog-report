@@ -174,6 +174,8 @@ public class BacklogReport extends AbstractReport {
         //XXX Might be needed for Jira 4.4<
         //String filterId = (String) params.get("filterid");
         
+        String pId = (String)params.get("product");
+        Long productId = Long.valueOf(pId);
         
         final StatisticsMapper mapper =
             new FixForVersionReleaseStatisticsMapper(versionManager);
@@ -184,7 +186,7 @@ public class BacklogReport extends AbstractReport {
         final Project project = projectManager.getProjectObj(projectId);
         if (project != null)
         {
-            request = makeProjectSearchRequest(project.getKey());
+            request = makeProjectSearchRequest(project.getKey(), productId);
         } else {
             // XXX No TDD here
             throw new IllegalStateException("filterInsteadOfProject not supported. Might be in future");
@@ -282,9 +284,13 @@ public class BacklogReport extends AbstractReport {
         */
     }
     
-    private SearchRequest makeProjectSearchRequest(String projectKey)
-    {
-        return new SearchRequest(JqlQueryBuilder.newBuilder().where().project(projectKey).buildQuery());
+    private SearchRequest makeProjectSearchRequest(String projectKey, Long productId)
+    {   
+        if(productId != ComponentValuesGenerator.ALL_ID) {
+            return new SearchRequest(JqlQueryBuilder.newBuilder().where().project(projectKey).and().component(productId).buildQuery());        
+        } else {
+            return new SearchRequest(JqlQueryBuilder.newBuilder().where().project(projectKey).buildQuery());
+        }
     }
 
     /**

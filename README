@@ -4,8 +4,8 @@ This a Jira report plugin which gives a "backlog" report, both in html and excel
 
 It is very specific for our setup where we:
 * Uses one project for several products
-* Products are components namespaced with "p:"
-* Have themes expressed as component namespaced with "p:"
+* Products are components name spaced with "p:" (the product selector select components prefixed with p:)
+* Have themes expressed as component name spaced with "t:"
 * Have Super Stories (the currently have to be named Super Story" as type
 * Have stories that are either sub-tasks to a super story or is a stand alone issue of any type
 * Have versions that are time boxed releases
