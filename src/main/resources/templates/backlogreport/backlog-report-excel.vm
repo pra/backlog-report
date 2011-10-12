@@ -20,14 +20,18 @@
 #foreach ($option in $statsGroup.entrySet())
 #set ($issues = $option.value)
 <tr valign="top">
- <th>$option.key</th>
+ <th>$!option.key</th>
  <td></td>
  <td></td>
  <td></td>
  <td></td>
  <td></td>
  <td></td>
- <th>$outlookDate.format($option.key.releaseDate)</th>
+ #if($option.key.releaseDate)
+ 	<th>$!outlookDate.format($!option.key.releaseDate)</th>
+ #else
+ 	<th></th>
+ #end	
 </tr>
 
 
